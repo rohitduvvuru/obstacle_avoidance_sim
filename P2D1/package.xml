@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>P2D1</name>
+  <version>0.0.0</version>
+  <description>
+    COMPSCI 603 Project 2 Deliverable 1: Manual Q-table wall following
+
+    This package implements a LiDAR-based wall-following controller for the
+    Triton robot in Gazebo using a manually specified Q-table policy.
+
+    The controller uses LiDAR measurements from the front of the robot and
+    divides them into three non-overlapping angular sectors:
+
+      Front-Right (FR)
+      Front (F)
+      Front-Left (FL)
+
+    These sectors are separated by angular gaps to reduce the impact of
+    sensor noise.
+
+    The controller uses a discretized state defined as:
+
+      state = (FR_distance_bin, Front_flag)
+
+    FR_distance_bin ∈ {TOO_CLOSE, CLOSE, DW, FAR}
+    Front_flag      ∈ {BLOCKED, CLEAR}
+
+    The controller selects one of the following motion primitives:
+
+      FWD_FAST
+      FWD_SLOW
+      TURN_L_SOFT
+      TURN_R_SOFT
+      TURN_L_HARD
+      TURN_R_HARD
+
+    Each action corresponds to a fixed linear and angular velocity command, specifically defined in p2d1.launch.
+
+    The controller selects the action with the maximum Q-value such that:
+
+        If the robot is too far from the wall, it steers toward it.
+        If the robot is too close to the wall, it steers away.
+        If an obstacle is detected in front, it performs a stronger turn
+          to avoid collision.
+        Otherwise the robot moves forward while maintaining the desired
+          wall distance.
+
+    This package requires the stingray_sim package, so ensure stingray_sim is located inside the same catkin workspace before building.
+    
+    Commands to run the demonstration:
+
+      cd ~/catkin_ws
+      catkin_make
+      source devel/setup.bash
+      roslaunch P2D1 p2d1.launch
+
+    The controller publishes velocity commands to /cmd_vel and the robot
+    follows the wall on its right side while maintaining approximately
+    the desired distance d_w.
+  </description>
+
+  <maintainer email="rrduvvuru@umass.edu">Rohit Duvvuru</maintainer>
+
+  <license>BSD</license>
+
+  <author email="rrduvvuru@umass.edu">Rohit Duvvuru</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>gazebo_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>gazebo_msgs</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>gazebo_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+</package>

@@ -1,0 +1,36 @@
+<launch>
+  <arg name="world_file" default="$(find stingray_sim)/worlds/largemaze.world" />
+  <arg name="algorithm" default="q_learning" />
+  <arg name="mode" default="train" />
+
+  <include file="$(find stingray_sim)/launch/wall_following.launch">
+    <arg name="world_file" value="$(arg world_file)" />
+  </include>
+
+  <node pkg="P2D2" type="rl_wall_follow_node.py" name="rl_wall_follow" output="screen">
+    <param name="algorithm" value="$(arg algorithm)"/>
+    <param name="mode" value="$(arg mode)"/>
+
+    <param name="alpha" value="0.2"/>
+    <param name="gamma" value="0.8"/>
+    <param name="epsilon0" value="0.9"/>
+    <param name="epsilon_decay" value="0.985"/>
+    <param name="min_epsilon" value="0.05"/>
+
+    <param name="control_hz" value="5.0"/>
+    <param name="num_episodes" value="300"/>
+    <param name="max_steps" value="300"/>
+
+    <param name="d_w" value="0.75"/>
+    <param name="front_blocked" value="0.60"/>
+    <param name="robust_k" value="5"/>
+
+    <param name="v_forward" value="0.3"/>
+    <param name="w_turn" value="0.78539816339"/>
+
+    <param name="model_name" value="triton"/>
+    <param name="qtable_path" value="$(find P2D2)/data/$(arg algorithm)_qtable.pkl"/>
+    <param name="best_qtable_path" value="$(find P2D2)/data/$(arg algorithm)_best_qtable.pkl"/>
+    <param name="rewards_csv" value="$(find P2D2)/data/$(arg algorithm)_rewards.csv"/>
+  </node>
+</launch>

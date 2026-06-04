@@ -1,0 +1,48 @@
+<launch>
+  <!-- Optionally forward args to the simulator -->
+  <arg name="world_file" default="" />
+
+  <!-- Start Gazebo + Triton world -->
+  <include file="$(find stingray_sim)/launch/wall_following.launch">
+  </include>
+
+  <!-- Start manual Q-table controller -->
+  <node pkg="P2D1" type="wall_follow_node.py" name="wall_follow" output="screen">
+    <!-- LiDAR region design -->
+    <param name="gap_deg" value="15.0"/>              <!-- dead-zone between sectors -->
+    <param name="sector_deg" value="60.0"/>           <!-- each of L/F/R -->
+
+    <!-- Desired wall distance -->
+    <param name="d_w" value="0.75"/>
+
+    <!-- Side latch thresholds -->
+    <param name="d_near" value="1.00"/>
+    <param name="d_lost" value="1.50"/>
+
+    <!-- Front obstacle threshold -->
+    <param name="front_blocked" value="0.60"/>
+
+    <!-- Motion primitives -->
+    <param name="v_fast" value="0.16"/>
+    <param name="v_slow" value="0.10"/>
+    <param name="w_soft" value="0.25"/>
+    <param name="w_hard" value="0.55"/>
+
+    <!-- Control loop -->
+    <param name="control_hz" value="20.0"/>
+    <param name="robust_k" value="5"/>                <!-- k-th smallest for region distance -->
+    <param name="use_pose_reset" value="true"/>
+    <param name="model_name" value="triton"/>
+  </node>
+
+  <node pkg="P2D1" type="set_triton_pose.py" name="set_triton_pose" output="screen" required="false">
+    <param name="model_name" value="triton"/>
+    <param name="x" value="-3.4911271113192655"/>
+    <param name="y" value="-3.5158118437849675"/>
+    <param name="z" value="0.0"/>
+    <param name="qx" value="-1.4769940887105835e-06"/>
+    <param name="qy" value="1.048504801470323e-05"/>
+    <param name="qz" value="-0.00023837490883773285"/>
+    <param name="qw" value="0.9999999715326422"/>
+  </node>
+</launch>

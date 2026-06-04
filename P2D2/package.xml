@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>P2D2</name>
+  <version>0.0.0</version>
+  <description>
+    COMPSCI Robotics – Project 2 Deliverable 2
+
+    This package implements reinforcement learning for right-side wall following
+    with the Triton robot in Gazebo using ROS Noetic. It supports both
+    Q-learning and SARSA, and provides separate training and testing modes.
+    Demonstration video links are provided at the bottom of the description section.
+
+    The controller uses LiDAR-based discrete states derived from:
+
+      Front-Right distance bin
+      Front obstacle flag
+      Front-Left distance bin
+
+    The action set consists of three discrete motion primitives:
+
+      FWD
+      LEFT
+      RIGHT
+
+    The Q-table is initialized from the manually defined Deliverable 1 policy
+    and is updated during learning using temporal-difference reinforcement
+    learning. Rewards are defined from task outcomes rather than directly rewarding specific actions.
+    In other words, reward is purely state-based.
+
+    During training, the robot is reset each episode to one of several fixed
+    pose-orientation pairs chosen at random so that it starts parallel to a wall
+    on its right side. The package saves learned Q-tables in the data/ directory, 
+    best learned Q-table checkpoints, and per-episode accumulated reward logs for plotting and analysis.
+
+    In testing mode, the package loads the best learned Q-table and executes the
+    learned greedy policy for evaluation in Gazebo.
+
+    This package requires the stingray_sim package, which provides the Triton robot model, 
+    the Gazebo world file used for training and testing, and the simulation launch infrastructure.
+    Consequently, ensure the workspace contains both:
+
+      catkin_ws/src/stingray_sim
+      catkin_ws/src/P2D2
+
+    Commands to run the demonstration:
+
+      cd ~/catkin_ws
+      catkin_make
+      source devel/setup.bash
+
+    Train Q-learning:
+      roslaunch P2D2 p2d2.launch algorithm:=q_learning mode:=train
+
+    Test Q-learning:
+      roslaunch P2D2 p2d2.launch algorithm:=q_learning mode:=test
+
+    Train SARSA:
+      roslaunch P2D2 p2d2.launch algorithm:=sarsa mode:=train
+
+    Test SARSA:
+      roslaunch P2D2 p2d2.launch algorithm:=sarsa mode:=test
+
+    Video Links:
+
+    Q-learning training:
+    https://drive.google.com/file/d/1j2r_whLoWZ1LX6LLoJXSZ33P2LgDQlsz/view?usp=sharing
+
+    Q-learning testing:
+    https://drive.google.com/file/d/1M8qKAGskxVRt2Ardk9v9eTbJ4B9fUhc9/view?usp=sharing
+
+    Sarsa training:
+    https://drive.google.com/file/d/15N21yI22PMYfSndlublNo9xG2SFqFAVn/view?usp=sharing
+
+    Sarsa testing:
+    https://drive.google.com/file/d/1Zaf89cbymMf5McTDT5cLWC2dznxvKZI6/view?usp=sharing
+
+    During testing, if the robot spawns at the i-beam first, just restart the sim until it spawns somewhere else.
+    Then, to show i-beam capabilities, run the following command during the test: 
+
+      rosservice call /gazebo/set_model_state "
+    > model_state:
+    >   model_name: 'triton'
+    >   pose:
+    >     position:
+    >       x: -1.1240135431289673
+    >       y: -2.623599052429199
+    >       z: 0.0
+    >     orientation:
+    >       x: 8.453633199678734e-06
+    >       y: -6.342688720906153e-06
+    >       z: -0.7060427665710449
+    >       w: -0.708169162273407
+    >   twist:
+    >     linear: {x: 0.0, y: 0.0, z: 0.0}
+    >     angular: {x: 0.0, y: 0.0, z: 0.0}
+    >   reference_frame: 'world'
+    > "
+
+  </description>
+
+  <maintainer email="rrduvvuru@umass.edu">Rohit Duvvuru</maintainer>
+
+  <license>BSD</license>
+
+  <author email="rrduvvuru@umass.edu">Rohit Duvvuru</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>gazebo_msgs</build_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <build_export_depend>gazebo_msgs</build_export_depend>
+  <build_export_depend>gazebo_ros</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>std_srvs</build_export_depend>
+  <exec_depend>gazebo_msgs</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+
+</package>
