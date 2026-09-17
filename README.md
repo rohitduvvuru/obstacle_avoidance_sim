@@ -1,16 +1,20 @@
 # Obstacle Avoidance Simulation
 
+Videos:
+
+Training SARSA
+
 https://github.com/user-attachments/assets/779f40ae-1f63-4c24-82a5-d76827111d05
 
-
+Testing SARSA
 
 https://github.com/user-attachments/assets/1e0e538b-b2f8-45ba-839e-856cf205ff96
 
-
+Training Q-learning
 
 https://github.com/user-attachments/assets/675405e7-7565-49a5-a46b-bf0be56bb4bb
 
-
+Testing Q-learning
 
 https://github.com/user-attachments/assets/244580ba-658e-4d6e-bdbb-aced0d957587
 
