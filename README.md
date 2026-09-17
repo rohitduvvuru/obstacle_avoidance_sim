@@ -1,5 +1,21 @@
 # Obstacle Avoidance Simulation
 
+https://github.com/user-attachments/assets/779f40ae-1f63-4c24-82a5-d76827111d05
+
+
+
+https://github.com/user-attachments/assets/1e0e538b-b2f8-45ba-839e-856cf205ff96
+
+
+
+https://github.com/user-attachments/assets/675405e7-7565-49a5-a46b-bf0be56bb4bb
+
+
+
+https://github.com/user-attachments/assets/244580ba-658e-4d6e-bdbb-aced0d957587
+
+
+
 ROS/Gazebo obstacle-avoidance and right-side wall-following controllers for the Triton robot. The repository contains two catkin packages for COMPSCI 603 Project 2:
 
 - `P2D1`: a manually designed Q-table wall-following controller.
